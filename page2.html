@@ -63,7 +63,7 @@
         <div class="w-[20%] flex flex-col border-r border-gray-200 bg-[#FAF9F5] print-hidden">
             <!-- Header -->
             <header class="p-4 border-b border-gray-200 bg-white">
-                <h2 class="text-base font-semibold">서인영 이력서</h2>
+                <h2 class="text-base font-semibold">서인영 포트폴리오</h2>
             </header>
 
             <!-- Chat Content -->
@@ -150,13 +150,9 @@
             <header class="flex justify-between items-center p-4 border-b border-gray-200 bg-white print-hidden">
                 <h2 class="text-base font-semibold">포트폴리오 정보</h2>
                 <div class="flex items-center gap-4">
-                    <button id="pdf-button" class="text-sm font-medium text-gray-600 hover:text-black">PDF로 저장</button>
-                    <button class="text-sm font-medium text-gray-600 hover:text-black">복사</button>
-                    <button class="text-gray-500 hover:text-black">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                    </button>
+                    <button onclick="window.location.href='page1.html'" class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">이전</button>
+                    <span class="text-sm font-medium text-gray-800">3/4</span>
+                    <button onclick="window.location.href='page3.html'" class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">다음</button>
                 </div>
             </header>
             
@@ -203,10 +199,6 @@
     </div>
 
     <script>
-        document.getElementById('pdf-button').addEventListener('click', function() {
-            window.print();
-        });
-        
         // URL 파라미터 확인하고 스크롤 처리
         window.addEventListener('load', function() {
             const urlParams = new URLSearchParams(window.location.search);
