@@ -80,6 +80,101 @@
         .content-panel::-webkit-scrollbar-thumb:hover {
             background: #9ca3af;
         }
+        
+        /* 테이블 스타일링 */
+        .skills-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .skills-table thead {
+            background: #f8fafc;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .skills-table th {
+            padding: 12px 16px;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: 600;
+            color: #374151;
+            font-size: 15px;
+            border-right: 1px solid #e5e7eb;
+        }
+        
+        .skills-table th:last-child {
+            border-right: none;
+        }
+        
+        .skills-table tbody tr {
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .skills-table tbody tr:hover {
+            background-color: #f9fafb;
+        }
+        
+        .skills-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        .skills-table td {
+            padding: 12px 16px;
+            vertical-align: middle;
+            text-align: center;
+            border-right: 1px solid #f3f4f6;
+            font-size: 14px;
+        }
+        
+        .skills-table td:last-child {
+            border-right: none;
+        }
+        
+        .category-cell {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: #475569;
+            text-align: center;
+            border-right: 1px solid #e2e8f0 !important;
+        }
+        
+        .skill-primary {
+            font-weight: 500;
+            color: #1e40af;
+            background: #f8faff;
+        }
+        
+        .skills-list {
+            font-weight: 500;
+            color: #166534;
+        }
+        
+        .description {
+            line-height: 1.5;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        .resume-card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e5e7eb;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -98,8 +193,8 @@
                 <div class="flex items-start gap-4">
                     <div class="w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 font-semibold text-sm">A</div>
                     <div class="flex-1">
-                        <h3 class="font-semibold text-base">내 이력서 보여줘.</h3>
-                        <p class="text-gray-600 mt-1">서인영님의 이력서를 보여드리겠습니다.</p>
+                        <h3 class="font-semibold text-base">내가 가지고 있는 보여줘.</h3>
+                        <p class="text-gray-600 mt-1">서인영님이 사용가능한 스킬들을 보여드리겠습니다.</p>
                     </div>
                 </div>
 
@@ -157,100 +252,85 @@
             <!-- Content -->
             <main class="flex-1 overflow-y-auto p-6 content-panel">
                 <div class="space-y-8">
-                    
-                    <!-- Profile Section -->
-                    <div class="bg-white p-4 rounded-lg border border-gray-200 flex items-center gap-6">
-                        <div class="flex-shrink-0">
-                            <img src="imgs/서인영 사진.jpg" alt="프로필 사진" class="w-40 h-40 rounded-full object-cover border-2 border-gray-100">
-                        </div>
-                        <div class="flex-1">
-                            <div class="space-y-2 text-sm">
-                                <div class="flex items-center">
-                                    <p class="w-32 font-semibold text-gray-500 flex-shrink-0">🎂 생년월일</p>
-                                    <p class="text-gray-800">1999.12.29</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <p class="w-32 font-semibold text-gray-500 flex-shrink-0">✉️ 이메일</p>
-                                    <p class="text-gray-800">dlsdud9098@naver.com</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <p class="w-32 font-semibold text-gray-500 flex-shrink-0">🐱 깃허브</p>
-                                    <p class="text-gray-800"><a href="https://github.com/dlsdud9098" target="_blank" class="text-blue-600 hover:underline">github.com/dlsdud9098</a></p>
-                                </div>
-                                <div class="flex items-center">
-                                    <p class="w-32 font-semibold text-gray-500 flex-shrink-0">💾 블로그</p>
-                                    <p class="text-gray-800"><a href="https://velog.io/@dlsdud9098" target="_blank" class="text-blue-600 hover:underline">dlsdud9098/velog.io</a></p>
-                                </div>
+                    <!-- 스킬 -->
+                    <div class="resume-card skills-card">
+                            <h2 class="card-title">⛏️ 스킬</h2>
+                            <div class="card-content">
+                                <table class="skills-table">
+                                    <thead>
+                                        <tr>
+                                            <th>분류</th>
+                                            <th>스킬</th>
+                                            <th>상세 설명</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td rowspan="1" class="category-cell">Backend</td>
+                                            <td class="skills-list">Flask, Django, FastAPI</td>
+                                            <td class="description">
+                                                ● <br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="3" class="category-cell">Frontend</td>
+                                            <td class="skills-list">React</td>
+                                            <td class="description">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="skills-list">HTML, CSS</td>
+                                            <td class="description">
+                                                ● 기본 문법
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="skills-list">Flutter</td>
+                                            <td class="description">
+                                                ● Flet을 활용하여 Todo-List 앱 개발
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="3" class="category-cell">Database</td>
+                                            <td class="skill-primary">MySQL</td>
+                                            <td class="description">
+                                                ● 기본 쿼리 문법
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="skill-primary">MongoDB</td>
+                                            <td class="description">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="skill-primary">PostgreSQL</td>
+                                            <td class="description">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="5" class="category-cell">Tool</td>
+                                            <td class="skill-primary">Git</td>
+                                            <td class="description">
+                                                ● 로컬과 원격 저장소 관리 <br>
+                                                ● 협업 버전 관리
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="skill-primary">Ubuntu</td>
+                                            <td class="description">
+                                                ● OS 사용을 위한 기본 문법 <br>
+                                                ● 학습을 위한 CUDA 설정 <br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="skill-primary">Orange</td>
+                                            <td class="description">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="skill-primary">Docker</td>
+                                            <td class="description">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>        
                             </div>
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- 학력 및 활동 -->
-                        <div class="space-y-6">
-                            <!-- 학력 -->
-                            <div class="bg-white p-4 rounded-lg border border-gray-200">
-                                <h3 class="text-base font-semibold mb-3">🏫 학력</h3>
-                                <div class="space-y-6 text-sm">
-                                    <div class="space-y-2">
-                                        <p class="font-bold text-gray-800">건국대학교(충주) 졸업</p>
-                                        <p class="text-gray-500 ml-4">소프트웨어학과 (2018.03 ~ 2025.02)</p>
-                                    </div>
-                                    <div class="space-y-2">
-                                        <p class="font-bold text-gray-800">덕수고등학교 졸업</p>
-                                        <p class="text-gray-500 ml-4">컴퓨터과 (2015.03 ~ 2018.02)</p>
-                                    </div>
-                                </div>
-
-                                <h3 class="text-base font-semibold mb-4 mt-6">🎒 활동</h3>
-                                <div class="space-y-6 text-sm">
-                                    <div class="space-y-2">
-                                        <p class="font-bold text-gray-800">데이터 AI 개발자</p>
-                                        <p class="text-gray-500 ml-4">서울청년취업사관학교 (2025.05 ~ 진행중)</p>
-                                        <p class="text-gray-500 ml-4">Python, MySQL, Git</p>
-                                    </div>
-                                    <div class="space-y-2">
-                                        <p class="font-bold text-gray-800">세미콜론</p>
-                                        <p class="text-gray-500 ml-4">고등학교 교내 동아리</p>
-                                        <p class="text-gray-500 ml-4">Android, Java</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 자격증 -->
-                        <div class="bg-white p-4 rounded-lg border border-gray-200">
-                            <h3 class="text-base font-semibold mb-3">🧾 자격증</h3>
-                            <div class="space-y-6 text-sm">
-                                <div>
-                                    <p class="font-bold text-gray-800">Docs:</p>
-                                    <ul class="list-disc list-inside text-gray-500 mt-1 ml-4 space-y-1">
-                                        <li>Office Excel® 2010 (2018)</li>
-                                        <li>Office PowerPoint® 2010 (2018)</li>
-                                        <li>ITQ 아래한글 A등급 (2015)</li>
-                                        <li>ITQ 한글파워포인트 B등급 (2015)</li>
-                                        <li>IT PLUS LEVEL 4 (2017)</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-gray-800">Develop:</p>
-                                    <ul class="list-disc list-inside text-gray-500 mt-1 ml-4 space-y-1">
-                                        <li>정보처리기사 (필기) (2025)</li>
-                                        <li>ADsP (2024)</li>
-                                        <li>정보처리기능사 (2017)</li>
-                                        <li>GTQ 2급 (2015)</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-gray-800">etc:</p>
-                                    <ul class="list-disc list-inside text-gray-500 mt-1 ml-4 space-y-1">
-                                        <li>2종 보통 (2020)</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </main>
         </div>
