@@ -24,6 +24,10 @@
         .content-panel::-webkit-scrollbar-thumb:hover {
             background: #9ca3af;
         }
+        .page-navigation {
+            transform: scale(0.8);
+            transform-origin: top right;
+        }
 
         /* PDF 인쇄용 스타일 */
         @media print {
@@ -113,25 +117,22 @@
         </div>
 
         <!-- Right Panel: Cover Letter Content -->
-        <div id="resume-panel" class="w-[80%] flex flex-col bg-white">
+        <div id="resume-panel" class="w-[80%] h-screen flex flex-col bg-white">
             <!-- Header (Print Hidden) -->
-            <header class="p-4 border-b border-gray-200 bg-white print-hidden">
-                <h2 class="text-xl font-semibold text-center mb-4">자기소개서</h2>
-                <!-- Navigation -->
-                <div class="flex justify-center items-center">
-                    <div class="flex items-center gap-8 bg-gray-50 px-8 py-4 rounded-xl border-2 border-gray-200 shadow-sm">
-                        <button onclick="window.location.href='readme_page1.html'" class="flex items-center gap-2 px-4 py-2 text-base font-semibold text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
-                            <span>←</span>
-                            <span>이전</span>
-                        </button>
-                        <div class="px-4 py-2 bg-blue-600 text-white font-bold text-lg rounded-lg shadow-sm">
-                            <span>2 / 2</span>
-                        </div>
-                        <button onclick="window.location.href='index.html'" class="flex items-center gap-2 px-4 py-2 text-base font-semibold text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
-                            <span>다음</span>
-                            <span>→</span>
-                        </button>
+            <header class="flex justify-between items-center p-1 border-b border-gray-200 bg-white print-hidden">
+                <h2 class="text-xl font-semibold">자기소개서</h2>
+                <div class="page-navigation flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 shadow-sm">
+                    <button onclick="window.location.href='readme_page1.html'" class="flex items-center gap-2 px-2 py-1 text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                        <span>←</span>
+                        <span>이전</span>
+                    </button>
+                    <div class="px-2 py-1 bg-blue-600 text-white font-semibold text-sm rounded-lg shadow-sm">
+                        <span>10 / 10</span>
                     </div>
+                    <button onclick="window.location.href='index.html'" class="flex items-center gap-2 px-2 py-1 text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                        <span>다음</span>
+                        <span>→</span>
+                    </button>
                 </div>
             </header>
             
@@ -154,9 +155,8 @@
                         <!-- 입사 후 포부 -->
                         <section>
                             <!-- <h4 class="text-lg font-semibold mb-3 border-b-2 border-gray-200 pb-2">🎯 입사 후 포부</h4> -->
-                            <h4 class="text-xl font-semibold mb-3 border-b-2 border-gray-200 pb-2">TISC의 엣지 AI 솔루션에 기여하고 함께 성장하겠습니다.</h4>
+                            <h4 class="text-xl font-semibold mb-3 border-b-2 border-gray-200 pb-2">포부</h4>
                             <div class="space-y-4 text-lg leading-relaxed">
-                                <p><strong>TISC의 엣지 AI 솔루션에 기여하고 함께 성장하겠습니다.</strong></p>
                                 <p>저는 사람들과 대화하는 것을 좋아하고 새로운 지식을 습득하는 것을 두려워하지 않는 것이 가장 큰 자산이라고 생각합니다. 입사 초기에는 이러한 강점을 발휘하여 회사의 기술 스택과 프로젝트 프로세스를 신속하게 습득하여 3개월 이내에 팀원들이 믿고 협업할 수 있는 개발자가 되겠습니다. </p>
                                 <p>- 1안  
 저의 개발 방식은 '완성, 그리고 효율적'으로 요약할 수 있습니다. 먼저 개발을 완료하고 수행했을 때 만족스럽지 못한 속도가 나오면 좀 더 집요하게 파고들어 1초라도 더 빠르게 작동할 수 있도록 하는 것을 좋아합니다. 이런 개발 방식은 비용을 줄이고, 나아가 다른 프로젝트를 시도할 수 있는 기반이 될 것이라 생각합니다. </p>

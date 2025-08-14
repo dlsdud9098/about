@@ -54,6 +54,10 @@
                 flex-direction: row;
             }
         }
+        .page-navigation {
+            transform: scale(0.8);
+            transform-origin: top right;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -116,25 +120,22 @@
         </div>
 
         <!-- Right Panel: Portfolio Content -->
-        <div id="resume-panel" class="w-[80%] flex flex-col bg-white">
+        <div id="resume-panel" class="w-[80%] h-screen flex flex-col bg-white">
             <!-- Header (Print Hidden) -->
-            <header class="p-4 border-b border-gray-200 bg-white print-hidden">
-                <h2 class="text-xl font-semibold text-center mb-4">포트폴리오</h2>
-                <!-- Navigation -->
-                <div class="flex justify-center items-center">
-                    <div class="flex items-center gap-8 bg-gray-50 px-8 py-4 rounded-xl border-2 border-gray-200 shadow-sm">
-                        <button onclick="window.location.href='portfolio_page2.html'" class="flex items-center gap-2 px-4 py-2 text-base font-semibold text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
-                            <span>←</span>
-                            <span>이전</span>
-                        </button>
-                        <div class="px-4 py-2 bg-blue-600 text-white font-bold text-lg rounded-lg shadow-sm">
-                            <span>3 / 3</span>
-                        </div>
-                        <button onclick="window.location.href='readme_page1.html'" class="flex items-center gap-2 px-4 py-2 text-base font-semibold text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
-                            <span>다음</span>
-                            <span>→</span>
-                        </button>
+            <header class="flex justify-between items-center p-1 border-b border-gray-200 bg-white print-hidden">
+                <h2 class="text-xl font-semibold">포트폴리오</h2>
+                <div class="page-navigation flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 shadow-sm">
+                    <button onclick="window.location.href='portfolio_page2.html'" class="flex items-center gap-2 px-2 py-1 text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                        <span>←</span>
+                        <span>이전</span>
+                    </button>
+                    <div class="px-2 py-1 bg-blue-600 text-white font-semibold text-sm rounded-lg shadow-sm">
+                        <span>8 / 10</span>
                     </div>
+                    <button onclick="window.location.href='readme_page1.html'" class="flex items-center gap-2 px-2 py-1 text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                        <span>다음</span>
+                        <span>→</span>
+                    </button>
                 </div>
             </header>
             
