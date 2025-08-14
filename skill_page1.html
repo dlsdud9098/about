@@ -125,12 +125,23 @@
         <!-- Right Panel: Skills Content -->
         <div id="resume-panel" class="w-[80%] flex flex-col bg-white">
             <!-- Header (Print Hidden) -->
-            <header class="flex justify-between items-center p-4 border-b border-gray-200 bg-white print-hidden">
-                <h2 class="text-xl font-semibold">보유기술</h2>
-                <div class="flex items-center gap-4">
-                    <button onclick="window.location.href='info_page.html'" class="text-sm font-medium text-gray-600 hover:text-black">← 이전</button>
-                    <span class="text-sm font-medium text-gray-800">3/10</span>
-                    <button onclick="window.location.href='skill_page2.html'" class="text-sm font-medium text-gray-600 hover:text-black">다음 →</button>
+            <header class="p-4 border-b border-gray-200 bg-white print-hidden">
+                <h2 class="text-xl font-semibold text-center mb-4">보유기술</h2>
+                <!-- Navigation -->
+                <div class="flex justify-center items-center">
+                    <div class="flex items-center gap-8 bg-gray-50 px-8 py-4 rounded-xl border-2 border-gray-200 shadow-sm">
+                        <button onclick="window.location.href='info_page.html'" class="flex items-center gap-2 px-4 py-2 text-base font-semibold text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                            <span>←</span>
+                            <span>이전</span>
+                        </button>
+                        <div class="px-4 py-2 bg-blue-600 text-white font-bold text-lg rounded-lg shadow-sm">
+                            <span>1 / 3</span>
+                        </div>
+                        <button onclick="window.location.href='skill_page2.html'" class="flex items-center gap-2 px-4 py-2 text-base font-semibold text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                            <span>다음</span>
+                            <span>→</span>
+                        </button>
+                    </div>
                 </div>
             </header>
             

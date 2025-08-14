@@ -292,14 +292,24 @@
     <div class="main-content">
         <!-- Page Navigation -->
         <div class="page-navigation">
-            <button onclick="window.location.href='readme_page2.html'" class="nav-button disabled">← 이전</button>
-            <span class="page-info">1/10</span>
-            <button onclick="window.location.href='info_page.html'" class="nav-button">다음 →</button>
+            <div class="flex items-center gap-8 bg-gray-50 px-8 py-4 rounded-xl border-2 border-gray-200 shadow-sm">
+                <button onclick="window.location.href='readme_page2.html'" class="flex items-center gap-2 px-4 py-2 text-base font-semibold text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md" disabled style="opacity: 0.5; cursor: not-allowed;">
+                    <span>←</span>
+                    <span>이전</span>
+                </button>
+                <div class="px-4 py-2 bg-blue-600 text-white font-bold text-lg rounded-lg shadow-sm">
+                    <span>1 / 1</span>
+                </div>
+                <button onclick="window.location.href='info_page.html'" class="flex items-center gap-2 px-4 py-2 text-base font-semibold text-gray-700 bg-white hover:bg-gray-100 border-2 border-gray-300 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                    <span>다음</span>
+                    <span>→</span>
+                </button>
+            </div>
         </div>
         
         <div class="welcome-section">
             <div class="logo">✦</div>
-            <h1 class="welcome-title">환영합니다, 서인영님</h1>
+            <h1 class="welcome-title">환영합니다, 서인영님의 이력서입니다.</h1>
         </div>
         
         <div class="input-section">
