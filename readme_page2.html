@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Interface Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 폰트 및 스크롤바 스타일 */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .content-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+        .content-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .content-panel::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+        .content-panel::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        /* PDF 인쇄용 스타일 */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #resume-panel, #resume-panel * {
+                visibility: visible;
+            }
+            #resume-panel {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: auto;
+                border: none;
+            }
+            .print-hidden {
+                display: none;
+            }
+            .printable-card {
+                border: none !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <div class="flex h-screen">
+        <!-- Left Panel: Chat Interface (Print Hidden) -->
+        <div class="w-[20%] flex flex-col border-r border-gray-200 bg-[#FAF9F5] print-hidden">
+            <!-- Header -->
+            <header class="p-4 border-b border-gray-200 bg-white">
+                <h2 class="text-base font-semibold">서인영 자기소개서</h2>
+                
+                <div class="flex items-center gap-4">
+                    <button onclick="window.location.href='readme_page1.html'" class="text-lg font-medium text-gray-600 hover:text-black">← 이전</button>
+                    <span class="text-lg font-medium text-gray-800">10/10</span>
+                    <button onclick="window.location.href='index.html'" class="text-lg font-medium text-gray-600 hover:text-black">다음 →</button>
+                </div>
+            </header>
+
+            <!-- Chat Content -->
+            <main class="flex-1 overflow-y-auto p-6 space-y-6">
+                <!-- User Prompt 1 -->
+                <div class="flex items-start gap-4">
+                    <div class="w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 font-semibold text-sm">A</div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-base">이제 저 포트폴리오 내용을 자기소개서로 교체하려고 해.</h3>
+                        <p class="text-gray-600 mt-1">알겠습니다. 서인영님의 자기소개서 내용을 보여드리겠습니다.</p>
+                    </div>
+                </div>
+
+                <!-- AI Response 1 -->
+                <div class="flex items-start gap-4">
+                     <div class="w-7 h-7 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-full h-full"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 0C22.386 0 0 22.386 0 50s22.386 50 50 50 50-22.386 50-50S77.614 0 50 0zM29.17 29.17c-2.343 2.343-2.343 6.142 0 8.485L41.515 50 29.17 62.343c-2.343 2.343-2.343 6.142 0 8.485 2.343 2.343 6.142 2.343 8.485 0L50 58.485l12.343 12.343c2.343 2.343 6.142 2.343 8.485 0 2.343-2.343 2.343-6.142 0-8.485L58.485 50l12.343-12.343c2.343-2.343 2.343-6.142 0-8.485-2.343-2.343-6.142-2.343-8.485 0L50 41.515 37.657 29.17c-2.343-2.343-6.142-2.343-8.485 0z" fill="#4B5563"></path></svg>
+                    </div>
+                    <div class="flex-1 bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-semibold text-base mb-2">서인영님의 자기소개서</h4>
+                        <div class="flex items-center gap-2 p-2 border border-gray-300 rounded-md bg-white">
+                            <input type="text" value="대화형 아티팩트" class="w-full bg-transparent outline-none text-gray-800" readonly>
+                            <div class="w-8 h-8 flex items-center justify-center text-xl">✨</div>
+                        </div>
+                        <div class="mt-3 text-gray-700 space-y-2 text-sm">
+                            <p class="font-semibold">서인영님의 자기소개서를 출력했습니다!</p>
+                            <p>지원동기, 핵심 역량, 성장 과정, 입사 후 포부로 구성되어 있습니다.</p>
+                            <p>다른 정보가 필요하시면 "인적사항 보여줘", "포트폴리오 보여줘"라고 말씀해 주세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <!-- Chat Input Area -->
+            <div class="border-t border-gray-200 p-4 bg-white">
+                <div class="flex items-center gap-3">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                    </button>
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                    </button>
+                    <div class="flex-1 flex items-center bg-gray-50 rounded-lg px-3 py-2">
+                        <input type="text" placeholder="Claude에게 답변하기" class="flex-1 bg-transparent border-none outline-none text-sm">
+                        <span class="text-xs text-gray-400 mr-2">Claude Sonnet 4</span>
+                        <button onclick="window.location.href='index.html'" class="w-6 h-6 bg-orange-500 hover:bg-orange-600 text-white rounded-full flex items-center justify-center text-sm transition-colors">
+                            ↑
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Cover Letter Content -->
+        <div id="resume-panel" class="w-[80%] flex flex-col bg-white">
+            <!-- Header (Print Hidden) -->
+            <header class="flex justify-between items-center p-4 border-b border-gray-200 bg-white print-hidden">
+                <h2 class="text-xl font-semibold">자기소개서</h2>
+                <div class="flex items-center gap-4">
+                    <button onclick="window.location.href='readme_page1.html'" class="text-sm font-medium text-gray-600 hover:text-black">← 이전</button>
+                    <span class="text-sm font-medium text-gray-800">10/10</span>
+                    <button onclick="window.location.href='main_page.html'" class="text-sm font-medium text-gray-600 hover:text-black">다음 →</button>
+                </div>
+            </header>
+            
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-8 content-panel">
+                <div class="bg-white p-6 rounded-lg printable-card">
+                    <div class="space-y-10 text-gray-800">
+
+                        <!-- 성장 과정 -->
+                        <section>
+                            <!-- <h4 class="text-lg font-semibold mb-3 border-b-2 border-gray-200 pb-2">🌱 성장 과정</h4> -->
+                            <h4 class="text-xl font-semibold mb-3 border-b-2 border-gray-200 pb-2">이론적 갈증을 성장의 동력으로 삼는 개발자</h4>
+                            <div class="space-y-4 text-lg leading-relaxed">
+                                <!-- <p><strong>이론적 갈증을 성장의 동력으로 삼는 개발자</strong></p> -->
+                                <p>저는 혼자서 프로젝트를 진행하며 아이디어를 빠르게 구현하는 능력을 길렀지만, 이 과정에서 '왜 이 코드를 사용해야 하는가'에 대한 이론적 깊이의 부족함을 절감했습니다. 단순히 기능을 구현하는 것을 넘어, 기술의 근본 원리를 이해하고 싶다는 갈증은 저를 청년취업사관학교 인공지능 부트캠프로 이끌었습니다.</p>
+                                <p>부트캠프에서 컴퓨터 비전, 딥러닝의 이론적 토대를 견고히 다지고, 다양한 팀 프로젝트를 통해 동료와 협업하며 시너지를 창출하는 방법을 배우고 있습니다. 특히, 저의 부족함을 솔직하게 인정하고 이를 해결하기 위해 주도적으로 학습 환경에 뛰어든 경험은, 저의 가장 큰 강점인 '지속적인 학습을 수용하는 적응력'과 '성장 잠재력'을 보여준다고 생각합니다. TISC의 일원으로서 3D 포인트 클라우드 처리, 센서 퓨전과 같은 새로운 기술 분야에 직면했을 때, 두려움 없이 학습하고 빠르게 적응하여 팀에 기여할 수 있다고 자신합니다.</p>
+                            </div>
+                        </section>
+
+                        <!-- 입사 후 포부 -->
+                        <section>
+                            <!-- <h4 class="text-lg font-semibold mb-3 border-b-2 border-gray-200 pb-2">🎯 입사 후 포부</h4> -->
+                            <h4 class="text-xl font-semibold mb-3 border-b-2 border-gray-200 pb-2">TISC의 엣지 AI 솔루션에 기여하고 함께 성장하겠습니다.</h4>
+                            <div class="space-y-4 text-lg leading-relaxed">
+                                <p><strong>TISC의 엣지 AI 솔루션에 기여하고 함께 성장하겠습니다.</strong></p>
+                                <p>TISC에 입사하게 된다면, 저의 시스템 최적화 경험과 문제 해결 능력을 바탕으로 회사의 기술 발전에 기여하고 싶습니다.</p>
+                                <p>단기적으로는 TISC의 3D 포인트 클라우드 처리 파이프라인과 데이터셋을 빠르게 학습하고, 저의 모델 경량화 및 최적화 경험을 살려 '7EYE'와 'LiCas' 솔루션의 엣지 디바이스 연산 효율을 개선하는 데 기여하겠습니다.</p>
+                                <p>장기적으로는 스마트시티 환경에서 수집된 시계열 데이터를 바탕으로 보행자의 동선과 행동을 예측하는 모델을 개발하여, 'MaRu' 솔루션이 단순한 사후 관제를 넘어 사고를 미연에 방지하는 '예측 AI 시스템'으로 발전하는 데 핵심적인 역할을 수행하고 싶습니다.</p>
+                                <p>대표님의 메시지에서 "발전의 길은 절대 일직선이 아니다"라는 문구를 인상 깊게 보았습니다. 저 또한 수많은 기술적 난관과 실패를 성장의 발판으로 삼아왔습니다. TISC에서 끊임없이 도전하고 동료들과 함께 장애물을 극복하며, '3D 인지 기술을 통한 스마트 사회 구축'이라는 비전을 함께 실현해나가는 개발자가 되겠습니다.</p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('pdf-button').addEventListener('click', function() {
+            window.print();
+        });
+    </script>
+
+</body>
+</html>

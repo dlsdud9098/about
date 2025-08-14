@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Interface Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 폰트 및 스크롤바 스타일 */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .content-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+        .content-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .content-panel::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+        .content-panel::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        /* PDF 인쇄용 스타일 */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #resume-panel, #resume-panel * {
+                visibility: visible;
+            }
+            #resume-panel {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: auto;
+                border: none;
+            }
+            .print-hidden {
+                display: none;
+            }
+            .printable-card {
+                border: none !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+            }
+            .project-item {
+                display: flex;
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <div class="flex h-screen">
+        <!-- Left Panel: Chat Interface (Print Hidden) -->
+        <div class="w-[20%] flex flex-col border-r border-gray-200 bg-[#FAF9F5] print-hidden">
+            <!-- Header -->
+            <header class="p-4 border-b border-gray-200 bg-white">
+                <h2 class="text-base font-semibold">서인영 이력서</h2>
+            </header>
+
+            <!-- Chat Content -->
+            <main class="flex-1 overflow-y-auto p-6 space-y-6">
+                <!-- User Prompt 1 -->
+                <div class="flex items-start gap-4">
+                    <div class="w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 font-semibold text-sm">A</div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-base">내 포트폴리오를 한눈에 볼 수 있게 목록으로 보여줘.</h3>
+                        <p class="text-gray-600 mt-1">알겠습니다. 서인영님의 포트폴리오를 목록 형태로 다시 정리해 보여드리겠습니다.</p>
+                    </div>
+                </div>
+
+                <!-- AI Response 1 -->
+                <div class="flex items-start gap-4">
+                     <div class="w-7 h-7 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-full h-full"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 0C22.386 0 0 22.386 0 50s22.386 50 50 50 50-22.386 50-50S77.614 0 50 0zM29.17 29.17c-2.343 2.343-2.343 6.142 0 8.485L41.515 50 29.17 62.343c-2.343 2.343-2.343 6.142 0 8.485 2.343 2.343 6.142 2.343 8.485 0L50 58.485l12.343 12.343c2.343 2.343 6.142 2.343 8.485 0 2.343-2.343 2.343-6.142 0-8.485L58.485 50l12.343-12.343c2.343-2.343 2.343-6.142 0-8.485-2.343-2.343-6.142-2.343-8.485 0L50 41.515 37.657 29.17c-2.343-2.343-6.142-2.343-8.485 0z" fill="#4B5563"></path></svg>
+                    </div>
+                    <div class="flex-1 bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-semibold text-base mb-2">서인영님의 포트폴리오 (목록형)</h4>
+                        <div class="flex items-center gap-2 p-2 border border-gray-300 rounded-md bg-white">
+                            <input type="text" value="대화형 아티팩트" class="w-full bg-transparent outline-none text-gray-800" readonly>
+                            <div class="w-8 h-8 flex items-center justify-center text-xl">✨</div>
+                        </div>
+                        <div class="mt-3 text-gray-700 space-y-2 text-sm">
+                            <p class="font-semibold">서인영님의 포트폴리오를 목록 형태로 출력했습니다!</p>
+                            <p>각 프로젝트를 한눈에 보실 수 있도록 세로로 정렬했습니다.</p>
+                            <p>더 보고 싶으시다면 "인적사항 보여줘", "자기소개서 보여줘"라고 말씀해 주세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <!-- Chat Input Area -->
+            <div class="border-t border-gray-200 p-4 bg-white">
+                <div class="flex items-center gap-3">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                    </button>
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                    </button>
+                    <div class="flex-1 flex items-center bg-gray-50 rounded-lg px-3 py-2">
+                        <input type="text" placeholder="Claude에게 답변하기" class="flex-1 bg-transparent border-none outline-none text-sm">
+                        <span class="text-xs text-gray-400 mr-2">Claude Sonnet 4</span>
+                        <button onclick="window.location.href='page3.html'" class="w-6 h-6 bg-orange-500 hover:bg-orange-600 text-white rounded-full flex items-center justify-center text-sm transition-colors">
+                            ↑
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Portfolio Content -->
+        <div id="resume-panel" class="w-[80%] flex flex-col bg-white">
+            <!-- Header (Print Hidden) -->
+            <header class="flex justify-between items-center p-4 border-b border-gray-200 bg-white print-hidden">
+                <h2 class="text-base font-semibold">포트폴리오 정보</h2>
+                <div class="flex items-center gap-4">
+                    <button onclick="window.location.href='portfolio_page2.html'" class="text-sm font-medium text-gray-600 hover:text-black">← 이전</button>
+                    <span class="text-sm font-medium text-gray-800">8/10</span>
+                    <button onclick="window.location.href='readme_page1.html'" class="text-sm font-medium text-gray-600 hover:text-black">다음 →</button>
+                </div>
+            </header>
+            
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-6 content-panel">
+                <div class="space-y-8">
+                    
+                    <!-- Portfolio Section -->
+                    <div class="bg-white p-4 rounded-lg border border-gray-200 printable-card">
+                        <h3 class="text-lg font-semibold mb-4">🚀 포트폴리오</h3>
+                        <div class="space-y-6">
+                            <!-- Project 1 -->
+                            <div class="flex flex-col md:flex-row items-start gap-6 border-b pb-6 project-item">
+                                <img src="imgs/post1.png" alt="웹툰, 소설 추천 사이트" class="w-full md:w-1/3 rounded-md object-cover">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-base">웹툰, 소설 추천 사이트</h4>
+                                    <p class="text-sm text-gray-600 mt-1">사용자 취향을 분석하여 웹툰과 소설을 추천하는 플랫폼입니다. 콘텐츠 기반 필터링과 협업 필터링 알고리즘을 적용하여 개인화된 추천을 제공합니다.</p>
+                                    <a href="#" class="text-sm text-blue-600 hover:underline mt-2 inline-block">자세히 보기 &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('pdf-button').addEventListener('click', function() {
+            window.print();
+        });
+    </script>
+
+</body>
+</html>

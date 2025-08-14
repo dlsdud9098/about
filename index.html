@@ -16,32 +16,6 @@
             background: #faf9f8;
             height: 100vh;
             overflow: hidden;
-            line-height: 1.2;
-        }
-        
-        /* 문장 간격 정확히 1.2배로 넓히기 */
-        p {
-            margin-bottom: 1.2em;
-        }
-        
-        li {
-            margin-bottom: 0.3em; /* 기본 0.25em의 1.2배 */
-        }
-        
-        .space-y-1 > * + * {
-            margin-top: 0.3rem; /* 0.25rem의 1.2배 */
-        }
-        
-        .space-y-2 > * + * {
-            margin-top: 0.6rem; /* 0.5rem의 1.2배 */
-        }
-        
-        .space-y-3 > * + * {
-            margin-top: 0.9rem; /* 0.75rem의 1.2배 */
-        }
-        
-        .space-y-4 > * + * {
-            margin-top: 1.2rem; /* 1rem의 1.2배 */
         }
         
         .titlebar {
@@ -51,7 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 13px;
             color: #666;
             -webkit-app-region: drag;
         }
@@ -69,7 +43,7 @@
             width: 20px;
             height: 20px;
             border: none;
-            font-size: 19px;
+            font-size: 14px;
             cursor: pointer;
             background: transparent;
         }
@@ -101,7 +75,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
-            font-size: 19px;
+            font-size: 14px;
         }
         
         .sidebar-btn:hover {
@@ -119,21 +93,6 @@
             height: calc(100vh - 30px);
             display: flex;
             flex-direction: column;
-        }
-        
-        .content-header {
-            padding: 16px;
-            border-bottom: 1px solid #e5e4e2;
-            background: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .content-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 40px;
@@ -146,13 +105,13 @@
         }
         
         .logo {
-            font-size: 29px;
+            font-size: 24px;
             margin-bottom: 20px;
             color: #e85d4e;
         }
         
         .welcome-title {
-            font-size: 41px;
+            font-size: 36px;
             color: #333;
             margin-bottom: 40px;
             font-weight: 400;
@@ -178,7 +137,7 @@
             width: 100%;
             border: none;
             outline: none;
-            font-size: 21px;
+            font-size: 16px;
             color: #333;
             background: transparent;
             min-height: 60px;
@@ -213,7 +172,7 @@
             border: 1px solid #e5e4e2;
             border-radius: 6px;
             padding: 8px 12px;
-            font-size: 19px;
+            font-size: 14px;
             color: #666;
             cursor: pointer;
             transition: all 0.2s;
@@ -225,7 +184,7 @@
         }
         
         .model-info {
-            font-size: 19px;
+            font-size: 14px;
             color: #999;
         }
         
@@ -240,7 +199,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 21px;
+            font-size: 16px;
             transition: all 0.2s;
         }
         
@@ -261,7 +220,7 @@
             border: 1px solid #e5e4e2;
             border-radius: 8px;
             padding: 12px 20px;
-            font-size: 19px;
+            font-size: 14px;
             color: #666;
             cursor: pointer;
             transition: all 0.2s;
@@ -277,7 +236,41 @@
         }
         
         .hamburger {
-            font-size: 23px;
+            font-size: 18px;
+        }
+        
+        .nav-button {
+            font-size: 14px;
+            font-weight: 500;
+            color: #4b5563;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nav-button:hover:not(.disabled) {
+            color: #000;
+        }
+        
+        .nav-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .page-navigation {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .page-info {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
         }
         
         .star {
@@ -297,18 +290,13 @@
     </div>
     
     <div class="main-content">
-        <!-- Header -->
-        <div class="content-header">
-            <h2 style="font-size: 21px; font-weight: 600; color: #333;">서인영 이력서</h2>
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <button style="font-size: 19px; font-weight: 500; color: #9ca3af; cursor: not-allowed; background: none; border: none;">이전</button>
-                <span style="font-size: 19px; font-weight: 500; color: #333;">1/5</span>
-                <button onclick="window.location.href='page1.html'" style="font-size: 19px; font-weight: 500; color: #2563eb; cursor: pointer; background: none; border: none;" onmouseover="this.style.color='#1d4ed8'" onmouseout="this.style.color='#2563eb'">다음</button>
-            </div>
+        <!-- Page Navigation -->
+        <div class="page-navigation">
+            <button onclick="window.location.href='readme_page2.html'" class="nav-button disabled">← 이전</button>
+            <span class="page-info">1/10</span>
+            <button onclick="window.location.href='info_page.html'" class="nav-button">다음 →</button>
         </div>
         
-        <!-- Content Body -->
-        <div class="content-body">
         <div class="welcome-section">
             <div class="logo">✦</div>
             <h1 class="welcome-title">환영합니다, 서인영님</h1>
@@ -324,6 +312,7 @@
                         <button class="control-button">🔍 연구</button>
                     </div>
                     <div class="input-controls-right">
+                        <span class="model-info">Claude Sonnet 4</span>
                         <button class="send-button" onclick="window.location.href='page1.html'">↑</button>
                     </div>
                 </div>
@@ -343,7 +332,6 @@
                     📊 분석하기
                 </button>
             </div>
-        </div>
         </div>
     </div>
 </body>
