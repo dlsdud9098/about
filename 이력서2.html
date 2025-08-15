@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Page</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS Variables from Design System */
+        :root {
+            /* Colors */
+            --color-neutral-0: #ffffff;
+            --color-neutral-1: #f6f8fa;
+            --color-neutral-2: #f1f3f4;
+            --color-neutral-3: #d0d7de;
+            --color-neutral-4: #afb8c1;
+            --color-neutral-5: #8c959f;
+            --color-neutral-6: #6e7781;
+            --color-neutral-7: #656d76;
+            --color-neutral-8: #24292f;
+
+            --color-accent-primary: #0969da;
+            --color-accent-secondary: #0550ae;
+            --color-success-primary: #1a7f37;
+            --color-success-secondary: #238636;
+            --color-attention-primary: #bf8700;
+            --color-orange-primary: #fd7e14;
+
+            --color-text-primary: #24292f;
+            --color-text-secondary: #656d76;
+            --color-text-muted: #6e7781;
+            --color-text-link: #0969da;
+            --color-text-link-hover: #0550ae;
+
+            --color-bg-default: #ffffff;
+            --color-bg-muted: #f6f8fa;
+            --color-bg-subtle: #f1f3f4;
+
+            --color-border-default: #d0d7de;
+            --color-border-muted: #f1f3f4;
+            --color-border-emphasis: #afb8c1;
+
+            /* Typography */
+            --font-family-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+            /* Spacing */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --space-16: 64px;
+
+            /* Borders */
+            --border-radius-small: 3px;
+            --border-radius-medium: 6px;
+            --border-radius-large: 12px;
+            --border-radius-full: 50%;
+
+            /* Shadows */
+            --shadow-small: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-medium: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-focus: 0 0 0 3px rgba(9,105,218,0.3);
+
+            /* GitHub Contribution Colors */
+            --contrib-bg: #ebedf0;
+            --contrib-level-0: #ebedf0;
+            --contrib-level-1: #9be9a8;
+            --contrib-level-2: #40c463;
+            --contrib-level-3: #30a14e;
+            --contrib-level-4: #216e39;
+        }
+
+        body {
+            font-family: var(--font-family-system);
+            background-color: var(--color-bg-default);
+            color: var(--color-text-primary);
+            line-height: 1.5;
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        .header {
+            background-color: var(--color-neutral-8);
+            color: var(--color-neutral-0);
+            padding: var(--space-4) 0;
+            margin-bottom: var(--space-6);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* Header Navigation */
+        .header-navigation {
+            display: flex;
+        }
+
+        .header-nav-tabs {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: var(--space-8);
+        }
+
+        .header-nav-tab {
+            margin: 0;
+        }
+
+        .header-nav-tab a {
+            display: block;
+            padding: var(--space-2) var(--space-4);
+            color: var(--color-neutral-1);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            border-radius: var(--border-radius-medium);
+            transition: all 150ms ease-in-out;
+        }
+
+        .header-nav-tab a:hover {
+            color: var(--color-neutral-0);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-nav-tab.active a {
+            color: var(--color-neutral-0);
+            background-color: var(--color-orange-primary);
+            font-weight: 600;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 25% 75%;
+            gap: var(--space-6);
+            margin-bottom: var(--space-16);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            padding-right: var(--space-6);
+        }
+
+        .profile-section {
+            margin-bottom: var(--space-8);
+        }
+
+        .avatar {
+            width: 296px;
+            height: 296px;
+            border-radius: var(--border-radius-full);
+            border: 1px solid var(--color-border-default);
+            background-color: var(--color-bg-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-4);
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+            border-radius: var(--border-radius-full);
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .profile-stats {
+            margin: var(--space-4) 0;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--space-1);
+            font-size: 16px;
+            color: var(--color-text-secondary);
+        }
+
+        .stat-value {
+            font-size: 16px;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-3);
+            margin-left: var(--space-6);
+            font-weight: 400;
+        }
+
+        .profile-link {
+            color: var(--color-text-link);
+            text-decoration: none;
+            transition: color 150ms ease-in-out;
+        }
+
+        .profile-link:hover {
+            color: var(--color-text-link-hover);
+            text-decoration: underline;
+        }
+
+        .stat-icon {
+            margin-right: var(--space-2);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* GitHub Contribution Chart Styles */
+        .contribution-section {
+            margin-top: var(--space-6);
+            padding: var(--space-4);
+            background: var(--color-bg-muted);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--border-radius-medium);
+        }
+
+        .contribution-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .contribution-calendar {
+            border-spacing: 2px;
+            font-size: 10px;
+            border-collapse: separate;
+        }
+
+        .contribution-calendar td {
+            padding: 0;
+        }
+
+        .contrib-day {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            background-color: var(--contrib-bg);
+        }
+
+        .contrib-day[data-level="0"] { background-color: var(--contrib-level-0); }
+        .contrib-day[data-level="1"] { background-color: var(--contrib-level-1); }
+        .contrib-day[data-level="2"] { background-color: var(--contrib-level-2); }
+        .contrib-day[data-level="3"] { background-color: var(--contrib-level-3); }
+        .contrib-day[data-level="4"] { background-color: var(--contrib-level-4); }
+
+        .contrib-month-label {
+            font-size: 10px;
+            color: var(--color-text-muted);
+            text-align: center;
+            padding: 0 var(--space-1);
+        }
+
+        .contrib-day-label {
+            font-size: 9px;
+            color: var(--color-text-muted);
+            text-align: right;
+            padding-right: var(--space-1);
+            line-height: 10px;
+        }
+
+        .contrib-legend {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: var(--space-2);
+            font-size: 11px;
+            color: var(--color-text-muted);
+            gap: var(--space-1);
+        }
+
+        .contrib-legend-item {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--color-accent-primary);
+            color: var(--color-neutral-0);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--color-accent-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(9,105,218,0.3);
+        }
+
+        .scroll-to-top:active {
+            transform: translateY(0);
+        }
+
+        /* Main Content Area */
+        .content-area {
+            padding-left: var(--space-6);
+        }
+
+        .content-section {
+            margin-bottom: var(--space-8);
+        }
+
+        /* Grid Resume Layout */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+
+        .resume-card {
+            background-color: var(--color-bg-default);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--border-radius-medium);
+            padding: var(--space-4);
+            box-shadow: var(--shadow-small);
+        }
+
+        .skills-card {
+            grid-column: 1 / -1;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-4);
+            border-bottom: 1px solid var(--color-border-muted);
+            padding-bottom: var(--space-2);
+        }
+
+        .card-content {
+            font-size: 16px;
+        }
+
+        .item {
+            margin-bottom: var(--space-3);
+        }
+
+        .item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-1);
+        }
+
+        .item-desc {
+            color: var(--color-text-secondary);
+            font-size: 15px;
+            margin-bottom: var(--space-1);
+        }
+
+        .item-skills {
+            color: var(--color-text-muted);
+            font-size: 14px;
+        }
+
+        .cert-group {
+            margin-bottom: var(--space-4);
+        }
+
+        .cert-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .cert-category {
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .cert-items {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+
+        .cert-items li {
+            color: var(--color-text-secondary);
+            font-size: 15px;
+        }
+
+        /* Skills Section - New Style */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .skill-card {
+            background-color: var(--color-bg-muted);
+            padding: var(--space-5);
+            border-radius: var(--border-radius-large);
+            border: 1px solid var(--color-border-default);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-4);
+        }
+
+        .skill-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .skill-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .skill-category {
+            background-color: var(--color-border-default);
+            color: var(--color-text-secondary);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--border-radius-medium);
+            border: 1px solid var(--color-border-emphasis);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .skill-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-left: 56px; /* 40px icon + 16px gap */
+        }
+
+        .skill-list li {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-2);
+            line-height: 1.4;
+        }
+
+        .skill-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Project Section Styles */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .project-card {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: var(--space-4);
+            border: 1px solid var(--color-border-default);
+            padding: var(--space-4);
+            border-radius: var(--border-radius-medium);
+            box-shadow: var(--shadow-small);
+            align-items: flex-start;
+        }
+
+        .project-image {
+            display: flex;
+            justify-content: center;
+            margin-left: 300px;
+        }
+
+        .project-image img {
+            height: 300px;
+            border-radius: var(--border-radius-medium);
+            border: 1px solid var(--color-border-muted);
+        }
+
+        .project-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .project-details h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            margin-left: 450px;
+        }
+
+        .project-details p {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-1);
+            margin-left: 450px;
+        }
+
+        .project-links {
+            margin-top: var(--space-3);
+            display: flex;
+            gap: var(--space-4);
+            margin-left: 450px;
+        }
+
+        .project-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text-link);
+            text-decoration: none;
+            transition: color 150ms ease-in-out;
+        }
+
+        .project-link:hover {
+            color: var(--color-text-link-hover);
+            text-decoration: underline;
+        }
+
+        /* Cover Letter Section */
+        .cover-letter-card {
+            background-color: var(--color-bg-default);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--border-radius-medium);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-small);
+        }
+
+        .cover-letter-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .cover-letter-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: var(--space-6);
+            margin-bottom: var(--space-3);
+            padding-bottom: var(--space-2);
+            border-bottom: 1px solid var(--color-border-muted);
+        }
+
+        .cover-letter-card p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 996px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: var(--space-4);
+            }
+
+            .sidebar {
+                padding-right: 0;
+            }
+
+            .content-area {
+                padding-left: 0;
+            }
+
+            .avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 26px;
+                margin-bottom: var(--space-2);
+            }
+
+            .avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center 20%;
+            }
+
+            .profile-section {
+                display: flex;
+                align-items: center;
+                gap: var(--space-4);
+                margin-bottom: var(--space-6);
+            }
+
+            .profile-info {
+                flex: 1;
+            }
+
+            .header-nav-tabs {
+                overflow-x: auto;
+                gap: var(--space-4);
+            }
+
+            .header-nav-tab a {
+                padding: var(--space-1) var(--space-3);
+                font-size: 14px;
+            }
+
+            .resume-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-card {
+                grid-column: 1;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contribution-section {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 var(--space-3);
+            }
+
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-nav-tab {
+                margin: 0;
+            }
+
+            .project-card {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">InyoungHub</div>
+                <!-- Header Navigation -->
+                <nav class="header-navigation">
+                    <ul class="header-nav-tabs">
+                        <li class="header-nav-tab active"><a href="#overview">개요</a></li>
+                        <li class="header-nav-tab"><a href="#projects">프로젝트</a></li>
+                        <li class="header-nav-tab"><a href="#cover-letter">자기소개서</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="profile-section">
+                    <div class="avatar"><img src="서인영 사진.jpg" alt="프로필 사진" onerror="this.onerror=null;this.src='https://placehold.co/296x296/EFEFEF/333333?text=Image+Not+Found';"/></div>
+                    <div class="profile-info">
+                        <h1 class="profile-name">서인영</h1>
+                        <hr>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <span class="stat-icon">🎂</span>
+                                <span><strong>생년월일</strong></span>
+                            </div>
+                            <div class="stat-value">1999.12.29</div>
+                            
+                            <div class="stat-item">
+                                <span class="stat-icon">✉️</span>
+                                <span><strong>이메일</strong></span>
+                            </div>
+                            <div class="stat-value"><a href="mailto:dlsdud9098@naver.com" class="profile-link">dlsdud9098@naver.com</a></div>
+                            
+                            <div class="stat-item">
+                                <span class="stat-icon">🐱</span>
+                                <span><strong>깃허브</strong></span>
+                            </div>
+                            <div class="stat-value"><a href="https://github.com/dlsdud9098" target="_blank" class="profile-link">github.com/dlsdud9098</a></div>
+                            
+                            <div class="stat-item">
+                                <span class="stat-icon">💾</span>
+                                <span><strong>블로그</strong></span>
+                            </div>
+                            <div class="stat-value"><a href="https://velog.io/@dlsdud9098" target="_blank" class="profile-link">dlsdud9098/velog.io</a></div>
+                        </div>
+
+                        <!-- GitHub Contribution Chart -->
+                        <div class="contribution-section" align="center">
+                            <div class="contribution-title">
+                                <span>🌿</span>
+                                최근 3개월 잔디 현황
+                            </div>
+                            <table class="contribution-calendar">
+                                <thead>
+                                    <tr>
+                                        <td></td>
+                                        <td class="contrib-month-label" colspan="4">May</td>
+                                        <td class="contrib-month-label" colspan="5">Jun</td>
+                                        <td class="contrib-month-label" colspan="4">Jul</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Sunday -->
+                                    <tr>
+                                        <td class="contrib-day-label">Sun</td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                    </tr>
+                                    <!-- Monday -->
+                                    <tr>
+                                        <td class="contrib-day-label">Mon</td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                    </tr>
+                                    <!-- Tuesday -->
+                                    <tr>
+                                        <td class="contrib-day-label">Tue</td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                    </tr>
+                                    <!-- Wednesday -->
+                                    <tr>
+                                        <td class="contrib-day-label">Wed</td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                    </tr>
+                                    <!-- Thursday -->
+                                    <tr>
+                                        <td class="contrib-day-label">Thu</td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                    </tr>
+                                    <!-- Friday -->
+                                    <tr>
+                                        <td class="contrib-day-label">Fri</td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="2"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                    </tr>
+                                    <!-- Saturday -->
+                                    <tr>
+                                        <td class="contrib-day-label">Sat</td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="0"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                        <td><div class="contrib-day" data-level="1"></div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="content-area">
+                <!-- Resume Overview -->
+                <section class="content-section" id="overview">
+                    <div class="resume-grid">
+                        <!-- Education -->
+                        <div class="resume-card">
+                            <h2 class="card-title">🎓 학력</h2>
+                            <div class="card-content">
+                                <div class="item">
+                                    <div class="item-title">건국대학교(충주) 졸업</div>
+                                    <li>소프트웨어학과 (2018.03 ~ 2025.02)</li>
+                                </div>
+                                <div class="item">
+                                    <div class="item-title">덕수고등학교 졸업</div>
+                                    <li>컴퓨터과 (2015.03 ~ 2018.02)</li>
+                                </div>
+                            </div>
+                            <br>
+                            <h2 class="card-title">🎒 교육</h2>
+                            <div class="card-content">
+                                <div class="item">
+                                    <div class="item-title">데이터 AI 개발자</div>
+                                    <li>서울청년취업사관학교 (2025.05 ~ 2025.09)</li>
+                                    <li>Python, MySQL, Git</li>
+                                </div>
+                                <div class="item">
+                                    <div class="item-title">세미콜론</div>
+                                    <li>고등학교 교내 동아리</li>
+                                    <li>Android, Java</li>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certificates -->
+                        <div class="resume-card">
+                            <h2 class="card-title">🧾 자격증</h2>
+                            <div class="card-content">
+                                <div class="cert-group">
+                                    <div class="cert-category">Docs:</div>
+                                    <div>
+                                        <li>Office Excel® 2010 (2018)</li>
+                                        <li>Office PowerPoint® 2010 (2018)</li>
+                                        <li>ITQ 아래한글 A등급 (2015)</li>
+                                        <li>ITQ 한글파워포인트 B등급 (2015)</li>
+                                        <li>IT PLUS LEVEL 4 (2017)</li>
+                                    </div>
+                                </div>
+                                <div class="cert-group">
+                                    <div class="cert-category">Develop:</div>
+                                    <div>
+                                        <li>정보처리기사 (필기) (2025)</li>
+                                        <li>ADsP (2024)</li>
+                                        <li>정보처리기능사 (2017)</li>
+                                        <li>GTQ 2급 (2015)</li>
+                                    </div>
+                                </div>
+                                <div class="cert-group">
+                                    <div class="cert-category">etc:</div>
+                                    <div>
+                                        <li>2종 보통 (2020)</li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </section>
+
+                <section class="content-section" id="">
+<!-- Skills Section - New Design -->
+                    <div class="content-section" style="margin-top: var(--space-8);">
+                        <h2 class="card-title" style="font-size: 20px; margin-bottom: var(--space-4);">⚒️ 스킬</h2>
+                        
+                        <!-- Programming Languages -->
+                        <div class="skills-grid">
+                            <div class="skill-card">
+                                <div class="skill-header">
+                                    <div class="skill-title-wrapper">
+                                        <svg class="skill-icon" style="color: #3776ab;" xmlns="http://www.w3.org/2000/svg" width="32.13" height="32" viewBox="0 0 256 255">
+                                            <defs><linearGradient id="SVGsGm35cjP" x1="12.959%" x2="79.639%" y1="12.039%" y2="78.201%"><stop offset="0%" stop-color="#387EB8"/><stop offset="100%" stop-color="#366994"/></linearGradient><linearGradient id="SVGSvQaLchT" x1="19.128%" x2="90.742%" y1="20.579%" y2="88.429%"><stop offset="0%" stop-color="#FFE052"/><stop offset="100%" stop-color="#FFC331"/></linearGradient></defs><path fill="url(#SVGsGm35cjP)" d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072M92.802 19.66a11.12 11.12 0 0 1 11.13 11.13a11.12 11.12 0 0 1-11.13 11.13a11.12 11.12 0 0 1-11.13-11.13a11.12 11.12 0 0 1 11.13-11.13"/><path fill="url(#SVGSvQaLchT)" d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.127H127.6v-8.745h86.441s41.486 4.705 41.486-60.712c0-65.416-36.21-63.096-36.21-63.096h-21.61v30.355s1.165 36.21-35.632 36.21h-61.362s-34.475-.557-34.475 33.32v56.013s-5.235 33.897 62.518 33.897m34.114-19.586a11.12 11.12 0 0 1-11.13-11.13a11.12 11.12 0 0 1 11.13-11.131a11.12 11.12 0 0 1 11.13 11.13a11.12 11.12 0 0 1-11.13 11.13"/>
+                                        </svg>
+                                        <span class="skill-title">Python</span>
+                                    </div>
+                                    <span class="skill-category">언어</span>
+                                </div>
+                                <ul class="skill-list">
+                                    <li>• 파이썬 기초 문법과 개념</li>
+                                    <li>• 다양한 구조와 정렬, 알고리즘 익히고 구현</li>
+                                </ul>
+                            </div>
+
+                            <div class="skill-card">
+                                <div class="skill-header">
+                                    <div class="skill-title-wrapper">
+                                        <div class="skill-icon" style="color: #3b82f6;">🎨</div>
+                                        <span class="skill-title">기타</span>
+                                    </div>
+                                    <span class="skill-category">언어</span>
+                                </div>
+                                <ul class="skill-list">
+                                    <li>• C, C++, Java, Swift, R</li>
+                                    <li>• 기초 문법과 개념</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Database -->
+                        <div class="skills-grid">
+                            <div class="skill-card">
+                                <div class="skill-header">
+                                    <div class="skill-title-wrapper">
+                                        <svg class="skill-icon" style="color: #00546b;" xmlns="http://www.w3.org/2000/svg" width="32.51" height="32" viewBox="0 0 256 252">
+                                            <path fill="#00546B" d="M235.648 194.212c-13.918-.347-24.705 1.045-33.752 4.872c-2.61 1.043-6.786 1.044-7.134 4.35c1.392 1.392 1.566 3.654 2.784 5.567c2.09 3.479 5.741 8.177 9.047 10.614c3.653 2.783 7.308 5.566 11.134 8.002c6.786 4.176 14.442 6.611 21.053 10.787c3.829 2.434 7.654 5.568 11.482 8.177c1.914 1.39 3.131 3.654 5.568 4.523v-.521c-1.219-1.567-1.567-3.828-2.784-5.568c-1.738-1.74-3.48-3.306-5.22-5.046c-5.045-6.784-11.308-12.7-18.093-17.571c-5.567-3.828-17.747-9.047-20.008-15.485c0 0-.175-.173-.348-.347c3.827-.348 8.35-1.74 12.005-2.784c5.915-1.567 11.308-1.218 17.398-2.784c2.783-.696 5.567-1.566 8.35-2.436v-1.565c-3.13-3.132-5.392-7.307-8.698-10.265c-8.873-7.657-18.617-15.137-28.707-21.4c-5.394-3.48-12.354-5.742-18.095-8.699c-2.086-1.045-5.567-1.566-6.784-3.306c-3.133-3.827-4.873-8.872-7.134-13.396c-5.044-9.57-9.917-20.182-14.267-30.272c-3.13-6.786-5.044-13.572-8.872-19.834c-17.92-29.577-37.406-47.497-67.33-65.07c-6.438-3.653-14.093-5.219-22.27-7.132c-4.348-.175-8.699-.522-13.048-.697c-2.784-1.218-5.568-4.523-8.004-6.089C34.006 4.573 8.429-8.996 1.122 8.924c-4.698 11.308 6.96 22.442 10.96 28.185c2.96 4.001 6.786 8.524 8.874 13.048c1.218 2.956 1.565 6.09 2.783 9.221c2.785 7.653 5.393 16.18 9.048 23.314c1.914 3.653 4.001 7.48 6.437 10.786c1.392 1.913 3.827 2.784 4.35 5.915c-2.435 3.48-2.61 8.7-4.003 13.049c-6.263 19.66-3.826 44.017 5.046 58.457c2.783 4.348 9.395 13.92 18.268 10.265c7.83-3.131 6.09-13.048 8.35-21.747c.524-2.09.176-3.48 1.219-4.872v.349c2.436 4.87 4.871 9.569 7.133 14.44c5.394 8.524 14.788 17.398 22.617 23.314c4.177 3.13 7.482 8.524 12.702 10.438v-.523h-.349c-1.044-1.566-2.61-2.261-4.001-3.48c-3.131-3.13-6.612-6.958-9.047-10.438c-7.306-9.744-13.745-20.53-19.486-31.665c-2.783-5.392-5.22-11.308-7.481-16.701c-1.045-2.09-1.045-5.22-2.784-6.263c-2.61 3.827-6.437 7.133-8.351 11.83c-3.304 7.481-3.653 16.702-4.871 26.27c-.696.176-.349 0-.697.35c-5.566-1.394-7.48-7.134-9.569-12.006c-5.22-12.352-6.09-32.186-1.565-46.452c1.218-3.654 6.438-15.136 4.35-18.616c-1.044-3.306-4.525-5.22-6.438-7.829c-2.261-3.306-4.698-7.48-6.263-11.135c-4.176-9.743-6.264-20.53-10.787-30.273c-2.088-4.524-5.74-9.22-8.699-13.396c-3.305-4.697-6.959-8.004-9.569-13.571c-.869-1.913-2.088-5.045-.696-7.133c.348-1.392 1.043-1.913 2.436-2.261c2.262-1.915 8.7.521 10.96 1.565c6.438 2.608 11.831 5.046 17.225 8.699c2.435 1.74 5.045 5.046 8.176 5.916h3.654c5.568 1.217 11.83.348 17.05 1.913c9.222 2.957 17.572 7.307 25.054 12.005c22.792 14.44 41.58 34.97 54.282 59.501c2.088 4 2.957 7.656 4.871 11.83c3.655 8.526 8.178 17.225 11.83 25.576c3.654 8.176 7.133 16.528 12.353 23.314c2.61 3.652 13.048 5.567 17.746 7.481c3.48 1.565 8.874 2.958 12.005 4.871c5.915 3.652 11.83 7.83 17.398 11.83c2.784 2.088 11.482 6.438 12.005 9.917"/>
+                                            <path fill="#00546B" d="M58.186 43.022c-2.957 0-5.044.35-7.132.871v.348h.348c1.393 2.784 3.827 4.698 5.566 7.133c1.393 2.783 2.61 5.568 4.003 8.352c.173-.175.347-.348.347-.348c2.437-1.741 3.654-4.524 3.654-8.7c-1.044-1.217-1.218-2.435-2.088-3.653c-1.043-1.741-3.306-2.61-4.698-4.003"/>
+                                        </svg>
+                                        <span class="skill-title">MySQL</span>
+                                    </div>
+                                    <span class="skill-category">데이터베이스</span>
+                                </div>
+                                <ul class="skill-list">
+                                    <li>• 기초 문법과 개념 (테이블 생성, 삭제, 수정, 조회 등)</li>
+                                    <li>• pymysql, sqlalchemy 라이브러리를 통해 Python과 MySQL을 연동</li>
+                                </ul>
+                            </div>
+
+                            <div class="skill-card">
+                                <div class="skill-header">
+                                    <div class="skill-title-wrapper">
+                                        <svg class="skill-icon" style="color: #ff6446;" xmlns="http://www.w3.org/2000/svg" width="49.96" height="32" viewBox="0 0 256 164">
+                                            <ellipse cx="170.667" cy="81.92" fill="#FFDE2D" rx="85.333" ry="81.92"/>
+                                            <ellipse cx="85.333" cy="81.92" fill="#327EFF" rx="85.333" ry="81.92"/>
+                                            <path fill="#FF6446" d="M170.667 81.92c0 45.243-38.206 81.92-85.334 81.92V81.92zm-85.334 0C85.333 36.677 123.538 0 170.667 0v81.92z"/>
+                                        </svg>
+                                        <span class="skill-title">ChromaDB</span>
+                                    </div>
+                                    <span class="skill-category">데이터베이스</span>
+                                </div>
+                                <ul class="skill-list">
+                                    <li>• 벡터 데이터베이스 기본 개념과 사용법</li>
+                                    <li>• AI/ML 프로젝트에서 임베딩 저장 및 검색</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Web Development -->
+                        <div class="skills-grid">
+                            <div class="skill-card">
+                                <div class="skill-header">
+                                    <div class="skill-title-wrapper">
+                                        <svg class="skill-icon" style="color: #e44d26;" xmlns="http://www.w3.org/2000/svg" width="22.7" height="32" viewBox="0 0 256 361">
+                                            <path fill="#E44D26" d="m255.555 70.766l-23.241 260.36l-104.47 28.962l-104.182-28.922L.445 70.766z"/>
+                                            <path fill="#F16529" d="m128 337.95l84.417-23.403l19.86-222.49H128z"/>
+                                            <path fill="#EBEBEB" d="M82.82 155.932H128v-31.937H47.917l.764 8.568l7.85 88.01H128v-31.937H85.739zm7.198 80.61h-32.06l4.474 50.146l65.421 18.16l.147-.04V271.58l-.14.037l-35.568-9.604z"/>
+                                            <path d="M24.18 0h16.23v16.035h14.847V0h16.231v48.558h-16.23v-16.26H40.411v16.26h-16.23V0M92.83 16.103H78.544V0h44.814v16.103h-14.295v32.455h-16.23V16.103zM130.47 0h16.923l10.41 17.062L168.203 0h16.93v48.558h-16.164V24.49l-11.166 17.265h-.28L146.35 24.49v24.068h-15.88zm62.74 0h16.235v32.508h22.824v16.05h-39.06z"/>
+                                            <path fill="#FFF" d="M127.89 220.573h39.327l-3.708 41.42l-35.62 9.614v33.226l65.473-18.145l.48-5.396l7.506-84.08l.779-8.576H127.89zm0-64.719v.078h77.143l.64-7.178l1.456-16.191l.763-8.568H127.89z"/>
+                                        </svg>
+                                        <span class="skill-title">HTML, CSS, JavaScript</span>
+                                    </div>
+                                    <span class="skill-category">웹</span>
+                                </div>
+                                <ul class="skill-list">
+                                    <li>• HTML 기본 태그 및 사용법 숙지</li>
+                                    <li>• form, input, button을 이용해 get, post 구현</li>
+                                    <li>• id, class를 익히고 사용법 숙지</li>
+                                    <li>• CSS, JavaScript의 기본 사용법 숙지</li>
+                                </ul>
+                            </div>
+
+                            <div class="skill-card">
+                                <div class="skill-header">
+                                    <div class="skill-title-wrapper">
+                                        <svg class="skill-icon" style="color: #00d8ff;" xmlns="http://www.w3.org/2000/svg" width="35.93" height="32" viewBox="0 0 256 228">
+                                            <path fill="#00D8FF" d="M210.483 73.824a172 172 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171 171 0 0 0-6.375 5.848a156 156 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a171 171 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a146 146 0 0 0 6.921 2.165a168 168 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a146 146 0 0 0 5.342-4.923a168 168 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145 145 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844m-6.365 70.984q-2.102.694-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14m-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a157 157 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345q.785 3.162 1.386 6.193M87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a157 157 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a135 135 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94M50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a135 135 0 0 1-6.318-1.979m12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144 144 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160 160 0 0 1-1.76-7.887m110.427 27.268a348 348 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381 381 0 0 0-7.365-13.322m-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322 322 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18M82.802 87.83a323 323 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a322 322 0 0 0-7.848 12.897m8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321 321 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147m37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486m52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382 382 0 0 0 7.859-13.026a347 347 0 0 0 7.425-13.565m-16.898 8.101a359 359 0 0 1-12.281 19.815a329 329 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310 310 0 0 1-12.513-19.846h.001a307 307 0 0 1-10.923-20.627a310 310 0 0 1 10.89-20.637l-.001.001a307 307 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329 329 0 0 1 12.335 19.695a359 359 0 0 1 11.036 20.54a330 330 0 0 1-11 20.722m22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026q-.518 2.504-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a161 161 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3M128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86"/>
+                                        </svg>
+                                        <span class="skill-title">React</span>
+                                    </div>
+                                    <span class="skill-category">웹</span>
+                                </div>
+                                <ul class="skill-list">
+                                    <li>• React 기초 문법을 익히고 컴포넌트 페이지를 사용한 SPA(Single Page Application) 구현</li>
+                                    <li>• 현 트랜드의 풀스택 개발에 대해 이해하고 React와 FastAPI 연동을 통해 간단한 페이지 구현</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- FastAPI -->
+                        <div class="skills-grid" style="grid-template-columns: 1fr;">
+                            <div class="skill-card">
+                                <div class="skill-header">
+                                    <div class="skill-title-wrapper">
+                                        <svg class="skill-icon" style="color: #009688;" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256">
+                                            <path fill="#009688" d="M128 0C57.33 0 0 57.33 0 128s57.33 128 128 128s128-57.33 128-128S198.67 0 128 0m-6.67 230.605v-80.288H76.699l64.128-124.922v80.288h42.966z"/>
+                                        </svg>
+                                        <span class="skill-title">FastAPI</span>
+                                    </div>
+                                    <span class="skill-category">웹</span>
+                                </div>
+                                <ul class="skill-list">
+                                    <li>• FastAPI의 기초 문법을 익히고 React와 연동으로 간단한 페이지 구현</li>
+                                    <li>• pymysql, sqlalchemy를 이용하여 db 연동</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Projects Section -->
+                <section class="content-section" id="projects">
+                    <h2 class="card-title" style="font-size: 20px; margin-bottom: var(--space-4);">🚀 프로젝트</h2>
+                    <div class="project-list">
+                        <!-- Project 1 -->
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="post1.png" alt="웹툰, 소설 추천 사이트">
+                            </div>
+                            <div class="project-details">
+                                <div>
+                                    <h3>웹툰, 소설 추천 사이트</h3>
+                                    <p><strong>개요:</strong> 사용자 취향을 분석하여 웹툰과 소설을 추천하는 플랫폼입니다.</p>
+                                    <p><strong>개발 인원:</strong> 1명 (개인 프로젝트)</p>
+                                    <p><strong>개발 일자:</strong> 2024.03 - 2024.05</p>
+                                    <p><strong>태그: </strong>Python, React, TypeScript, MySQL, Playwright, FastAPI</p>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">자세히 보기</a>
+                                    <a href="#" class="project-link">깃허브 보기</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Project 2 -->
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="post2.png" alt="가상 염색 시뮬레이터">
+                            </div>
+                            <div class="project-details">
+                                <div>
+                                    <h3>가상 염색 시뮬레이터</h3>
+                                    <p><strong>개요:</strong> AI를 활용하여 사용자 사진에 다양한 헤어 컬러를 적용해보는 시뮬레이터입니다.</p>
+                                    <p><strong>개발 인원:</strong> 1명 (개인 프로젝트)</p>
+                                    <p><strong>개발 일자:</strong> 2024.01 - 2024.02</p>
+                                    <p><strong>태그: </strong>Python, PyQT5, Tensorflow</p>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">자세히 보기</a>
+                                    <a href="#" class="project-link">깃허브 보기</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Project 3 -->
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="post3.png" alt="영상 질감 바꾸기">
+                            </div>
+                            <div class="project-details">
+                                <div>
+                                    <h3>영상 질감 바꾸기</h3>
+                                    <p><strong>개요:</strong> 영상에 유화, 수채화 등 예술적인 질감을 적용하는 프로그램입니다.</p>
+                                    <p><strong>개발 인원:</strong> 2명</p>
+                                    <p><strong>개발 일자:</strong> 2023.11 - 2023.12</p>
+                                    <p><strong>태그: </strong>Python, Stable-Diffusion</p>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">자세히 보기</a>
+                                    <a href="#" class="project-link">깃허브 보기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Cover Letter Section -->
+                <section class="content-section" id="cover-letter">
+                    <h2 class="card-title" style="font-size: 20px; margin-bottom: var(--space-4);">📝 자기소개서</h2>
+                    <div class="cover-letter-card">
+                        <h3>기술로 더 안전한 세상을 만드는 TISC의 비전에 동참하고 싶습니다.</h3>
+                        <hr>
+                        <p>대학교 3학년, ChatGPT를 통해 AI가 인간의 삶을 혁신할 무한한 잠재력을 목격하며 AI/ML 엔지니어의 꿈을 키웠습니다. 기술 자체에 대한 호기심을 넘어, AI 기술로 실제 세상의 문제를 해결하고 가치를 창출하는 개발자가 되겠다는 명확한 목표를 세웠습니다. 이러한 저의 비전은 3D LiDAR와 카메라의 센서 퓨전 기술을 통해 스마트시티와 산업 현장의 안전을 책임지는 (주)티아이에스씨(TISC)의 방향성과 정확히 일치합니다.</p>
+                        <p>특히 악천후 속에서도 객체 인식의 신뢰성을 획기적으로 높인 'LiCas' 솔루션과, 교통 데이터를 분석하여 보행자의 안전을 지키는 'MaRu' 솔루션에 깊은 감명을 받았습니다. 이는 제가 이미지, 음성, 텍스트 등 다양한 데이터를 다루는 멀티모달 AI 프로젝트들을 진행하며 추구해온 '다양한 정보의 융합을 통한 문제 해결'이라는 가치와 맞닿아 있습니다. TISC의 독보적인 엣지 AI 기술력에 저의 성장 잠재력을 더하여, 기술로 더 안전하고 효율적인 사회를 만드는 여정에 함께하고 싶어 지원하게 되었습니다.</p>
+                        <br>
+                        <h3>문제의 본질을 파고드는 집요함과 시스템 최적화 경험</h3>
+                        <hr>
+                        <p>저는 주어진 과제를 해결하는 것을 넘어, 문제의 본질을 파고들어 더 나은 결과를 만드는 과정을 즐깁니다. 두 가지 핵심 프로젝트 경험을 통해 저의 문제 해결 능력과 시스템 최적화 역량을 증명하고 싶습니다.</p>
+                        <p><strong>첫째, 포기하지 않는 집요함으로 영상의 완성도를 높인 경험이 있습니다.</strong><br>Stable Diffusion을 활용해 동영상을 변환하는 프로젝트에서, 인물의 표정이 어색하게 변하는 문제에 직면했습니다. 프로젝트 기한과 이미 확보된 결과물을 고려하면 타협할 수도 있었지만, 더 높은 완성도를 위해 문제 해결에 매달렸습니다. 먼저 'EbSynth'라는 도구를 적용해 보았으나, 눈을 감았다 뜨는 장면에서 여전히 한계가 있었습니다. 이에 안주하지 않고, 영상의 모든 프레임을 분석해 '눈 크기'를 기준으로 눈을 뜨고 있는 프레임을 자동 선별하고, 이를 눈 감은 구간에 '추가 키프레임'으로 삽입하는 로직을 직접 구현했습니다. 그 결과, 인물의 눈 깜빡임과 표정 변화가 훨씬 자연스러워진 결과물을 얻을 수 있었습니다. 이 경험을 통해 문제의 본질을 파고들어 해결책을 찾아낼 때 비로소 기술적 성장을 이룰 수 있다는 것을 배웠습니다.</p>
+                        <p><strong>둘째, 점진적 개선을 통해 데이터 수집 성능을 2배 향상시킨 경험이 있습니다.</strong><br>대규모 데이터 수집 프로젝트 초기, Selenium 기반의 동적 크롤러는 5시간 이상의 실행 시간이 소요되었습니다. 저는 이 비효율을 개선하기 위해 첫 단계로 Playwright를 도입하여 실행 시간을 2~3시간으로 단축했습니다. 여기서 멈추지 않고, 브라우저의 cURL 요청을 분석하여 UI 렌더링 과정을 생략하고 API를 직접 호출하는 방식으로 변경했습니다. 이 접근법을 통해 최종 실행 시간을 1~2시간으로 단축하며 약 2배 이상의 성능 개선을 이뤄냈습니다. 이 과정은 제한된 자원 내에서 최고의 효율을 추구해야 하는 엣지 컴퓨팅 환경에 대한 저의 높은 이해도와 시스템 최적화 역량을 보여주는 경험이라고 생각합니다.</p>
+                        <p>이 외에도 이미지 분류, AI 가수, 소설 장르 예측 등 다양한 미니 프로젝트를 통해 이미지, 음성, 텍스트 데이터를 다루는 멀티모달 AI에 대한 폭넓은 시야와 실무 경험을 갖추었습니다.</p>
+                        <br>
+                        <h3>이론적 갈증을 성장의 동력으로 삼는 개발자</h3>
+                        <hr>
+                        <p>저는 혼자서 프로젝트를 진행하며 아이디어를 빠르게 구현하는 능력을 길렀지만, 이 과정에서 '왜 이 코드를 사용해야 하는가'에 대한 이론적 깊이의 부족함을 절감했습니다. 단순히 기능을 구현하는 것을 넘어, 기술의 근본 원리를 이해하고 싶다는 갈증은 저를 청년취업사관학교 인공지능 부트캠프로 이끌었습니다.</p>
+                        <p>부트캠프에서 컴퓨터 비전, 딥러닝의 이론적 토대를 견고히 다지고, 다양한 팀 프로젝트를 통해 동료와 협업하며 시너지를 창출하는 방법을 배우고 있습니다. 특히, 저의 부족함을 솔직하게 인정하고 이를 해결하기 위해 주도적으로 학습 환경에 뛰어든 경험은, 저의 가장 큰 강점인 '지속적인 학습을 수용하는 적응력'과 '성장 잠재력'을 보여준다고 생각합니다. TISC의 일원으로서 3D 포인트 클라우드 처리, 센서 퓨전과 같은 새로운 기술 분야에 직면했을 때, 두려움 없이 학습하고 빠르게 적응하여 팀에 기여할 수 있다고 자신합니다.</p>
+                        <br>
+                        <h3>TISC의 엣지 AI 솔루션에 기여하고 함께 성장하겠습니다.</h3>
+                        <hr>
+                        <p>TISC에 입사하게 된다면, 저의 시스템 최적화 경험과 문제 해결 능력을 바탕으로 회사의 기술 발전에 기여하고 싶습니다.</p>
+                        <p>단기적으로는 TISC의 3D 포인트 클라우드 처리 파이프라인과 데이터셋을 빠르게 학습하고, 저의 모델 경량화 및 최적화 경험을 살려 '7EYE'와 'LiCas' 솔루션의 엣지 디바이스 연산 효율을 개선하는 데 기여하겠습니다.</p>
+                        <p>장기적으로는 스마트시티 환경에서 수집된 시계열 데이터를 바탕으로 보행자의 동선과 행동을 예측하는 모델을 개발하여, 'MaRu' 솔루션이 단순한 사후 관제를 넘어 사고를 미연에 방지하는 '예측 AI 시스템'으로 발전하는 데 핵심적인 역할을 수행하고 싶습니다.</p>
+                        <p>대표님의 메시지에서 "발전의 길은 절대 일직선이 아닙니다"라는 문구를 인상 깊게 보았습니다. 저 또한 수많은 기술적 난관과 실패를 성장의 발판으로 삼아왔습니다. TISC에서 끊임없이 도전하고 동료들과 함께 장애물을 극복하며, '3D 인지 기술을 통한 스마트 사회 구축'이라는 비전을 함께 실현해나가는 개발자가 되겠습니다.</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" title="맨 위로">
+        ↑
+    </button>
+
+    <script>
+        // Tab navigation functionality
+        function initializeNavigation() {
+            const tabs = document.querySelectorAll('.header-nav-tab a');
+            const sections = document.querySelectorAll('.content-section');
+            
+            // Handle tab clicks
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.header-nav-tab').forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.closest('.header-nav-tab').classList.add('active');
+                });
+            });
+            
+            // Handle scroll-based active tab highlighting
+            function updateActiveTab() {
+                const scrollPosition = window.scrollY + 100; // Offset for better UX
+                
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        // Remove active class from all tabs
+                        document.querySelectorAll('.header-nav-tab').forEach(t => t.classList.remove('active'));
+                        
+                        // Add active class to corresponding tab
+                        const correspondingTab = document.querySelectorAll('.header-nav-tab')[index];
+                        if (correspondingTab) {
+                            correspondingTab.classList.add('active');
+                        }
+                    }
+                });
+            }
+            
+            // Listen for scroll events
+            window.addEventListener('scroll', updateActiveTab);
+        }
+
+        // Scroll to Top functionality
+        function initializeScrollToTop() {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            
+            // Show/hide button based on scroll position
+            function toggleScrollToTopButton() {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            }
+            
+            // Scroll to top when button is clicked
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Event listeners
+            window.addEventListener('scroll', toggleScrollToTopButton);
+            scrollToTopBtn.addEventListener('click', scrollToTop);
+        }
+
+        // Initialize functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeNavigation();
+            initializeScrollToTop();
+        });
+    </script>
+</body>
+</html>

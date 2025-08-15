@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Interface Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 폰트 및 스크롤바 스타일 */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px; /* 기본 폰트 크기 증가 */
+        }
+        .content-panel::-webkit-scrollbar {
+            width: 10px;
+        }
+        .content-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .content-panel::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 5px;
+        }
+        .content-panel::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+        .page-navigation {
+            transform: scale(1.1);
+            transform-origin: top right;
+        }
+
+        /* A4 가로 인쇄 최적화 */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 12mm;
+            }
+            
+            .print-hidden {
+                display: none !important;
+            }
+            
+            body {
+                transform: scale(1.15);
+                transform-origin: top left;
+                width: 87%;
+                height: 87%;
+            }
+            
+            #resume-panel {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 20px !important;
+            }
+            
+            .printable-card {
+                border: none !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+                margin-bottom: 15px !important;
+            }
+        }
+
+        /* 텍스트 크기 조정 */
+        .text-xl { font-size: 1.35rem; }
+        .text-lg { font-size: 1.2rem; }
+        .text-base { font-size: 1.1rem; }
+        .text-sm { font-size: 1rem; }
+
+        /* 간격 조정 */
+        .gap-6 { gap: 2rem; }
+        .gap-4 { gap: 1.5rem; }
+        .gap-3 { gap: 1rem; }
+        .space-y-8 > * + * { margin-top: 2.5rem; }
+        .space-y-6 > * + * { margin-top: 2rem; }
+        .space-y-4 > * + * { margin-top: 1.5rem; }
+        .space-y-3 > * + * { margin-top: 1rem; }
+        .space-y-2 > * + * { margin-top: 0.75rem; }
+
+        /* 패딩 조정 */
+        .p-6 { padding: 2rem; }
+        .p-4 { padding: 1.5rem; }
+        .px-4 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .py-2 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+
+        /* 프로필 이미지 크기 조정 */
+        .profile-image {
+            width: 18rem;
+            height: 18rem;
+        }
+
+        /* 카드 높이 조정 */
+        .info-card {
+            min-height: 200px;
+        }
+
+        /* 페이지 네비게이션 개선 */
+        .page-navigation button {
+            padding: 10px 16px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            border: 2px solid #d1d5db;
+            background: white;
+            color: #374151;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .page-navigation button:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        .page-navigation .current-page {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            padding: 10px 16px;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <div class="flex h-screen">
+        <!-- Left Panel: Chat Interface -->
+        <div class="w-[20%] flex flex-col border-r border-gray-200 bg-[#FAF9F5] print-hidden">
+            <!-- Header -->
+            <header class="p-4 border-b border-gray-200 bg-white">
+                <h2 class="text-base font-semibold">서인영 이력서</h2>
+            </header>
+
+            <!-- Chat Content -->
+            <main class="flex-1 overflow-y-auto p-6 space-y-6">
+                <!-- User Prompt 1 -->
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 font-semibold text-sm">A</div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-base">내 이력서 보여줘.</h3>
+                        <p class="text-gray-600 mt-1">서인영님의 이력서를 보여드리겠습니다.</p>
+                    </div>
+                </div>
+
+                <!-- AI Response 1 -->
+                <div class="flex items-start gap-4">
+                     <div class="w-8 h-8 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-full h-full"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 0C22.386 0 0 22.386 0 50s22.386 50 50 50 50-22.386 50-50S77.614 0 50 0zM29.17 29.17c-2.343 2.343-2.343 6.142 0 8.485L41.515 50 29.17 62.343c-2.343 2.343-2.343 6.142 0 8.485 2.343 2.343 6.142 2.343 8.485 0L50 58.485l12.343 12.343c2.343 2.343 6.142 2.343 8.485 0 2.343-2.343 2.343-6.142 0-8.485L58.485 50l12.343-12.343c2.343-2.343 2.343-6.142 0-8.485-2.343-2.343-6.142-2.343-8.485 0L50 41.515 37.657 29.17c-2.343-2.343-6.142-2.343-8.485 0z" fill="#4B5563"></path></svg>
+                    </div>
+                    <div class="flex-1 bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-semibold text-base mb-2">서인영님의 이력서</h4>
+                        <div class="flex items-center gap-2 p-2 border border-gray-300 rounded-md bg-white">
+                            <input type="text" value="대화형 아티팩트" class="w-full bg-transparent outline-none text-gray-800" readonly>
+                            <div class="w-8 h-8 flex items-center justify-center text-xl">✨</div>
+                        </div>
+                        <div class="mt-3 text-gray-700 space-y-2 text-sm">
+                            <p class="font-semibold">서인영님의 이력서를 출력했습니다!</p>
+                            <p>주요 특징들:</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                <li>1999년생, 건국대학교 소프트웨어학과 졸업</li>
+                                <li>현재 데이터 AI 개발자 과정 수강중</li>
+                                <li>정보처리기사(필기), ADSP 자격증 취득</li>
+                            </ul>
+                            <p>서인영님의 이력서를 출력했습니다. 더 보고 싶으시다면 "프로젝트 보여줘", "자기소개서 보여줘"라고 말씀해 주세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <!-- Chat Input Area -->
+            <div class="border-t border-gray-200 p-4 bg-white">
+                <div class="flex items-center gap-3">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                    </button>
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Resume Content -->
+        <div class="w-[80%] h-screen flex flex-col bg-white" id="resume-panel">
+            <!-- Header -->
+            <header class="flex justify-between items-center p-2 border-b border-gray-200 bg-white print-hidden">
+                <h2 class="text-xl font-semibold">이력서 정보</h2>
+                <div class="page-navigation flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 shadow-sm">
+                    <button onclick="window.location.href='index.html'">
+                        <span>←</span>
+                        <span>이전</span>
+                    </button>
+                    <div class="current-page">
+                        <span>2 / 10</span>
+                    </div>
+                    <button onclick="window.location.href='skill_page1.html'">
+                        <span>다음</span>
+                        <span>→</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-8 content-panel">
+                <div class="space-y-8">
+                    
+                    <!-- Profile Section -->
+                    <div class="bg-white p-6 rounded-lg border border-gray-200 flex items-center gap-8 printable-card">
+                        <div class="flex-shrink-0">
+                            <img src="imgs/서인영 사진.jpg" alt="프로필 사진" class="profile-image rounded-full object-cover border-2 border-gray-100" style="object-position: center 20%;">
+                        </div>
+                        <div class="flex-1">
+                            <div class="space-y-3 text-xl">
+                                <div class="flex items-center">
+                                    <p class="w-40 font-semibold text-gray-500">🎂 생년월일</p>
+                                    <p class="text-gray-800">1999.12.29</p>
+                                </div>
+                                <div class="flex items-center">
+                                    <p class="w-40 font-semibold text-gray-500">✉️ 이메일</p>
+                                    <p class="text-gray-800">dlsdud9098@naver.com</p>
+                                </div>
+                                <div class="flex items-center">
+                                    <p class="w-40 font-semibold text-gray-500">🐱 깃허브</p>
+                                    <a href="https://github.com/dlsdud9098" target="_blank" class="text-blue-600 hover:underline">github.com/dlsdud9098</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <p class="w-40 font-semibold text-gray-500">💾 블로그</p>
+                                    <a href="https://velog.io/@dlsdud9098" target="_blank" class="text-blue-600 hover:underline">dlsdud9098/velog.io</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- 학력 및 활동 -->
+                        <div class="space-y-8 flex flex-col">
+                            <!-- 학력 -->
+                            <div class="bg-white p-6 rounded-lg border border-gray-200 info-card printable-card">
+                                <h3 class="text-xl font-semibold mb-4">🎓 학력</h3>
+                                <div class="space-y-4 text-lg">
+                                    <div>
+                                        <p class="font-bold text-gray-800">건국대학교(충주) 졸업</p>
+                                        <p class="text-gray-500 ml-4">소프트웨어학과 (2018.03 ~ 2025.02)</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-gray-800">덕수고등학교 졸업</p>
+                                        <p class="text-gray-500 ml-4">컴퓨터과 (2015.03 ~ 2018.02)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 활동 -->
+                            <div class="bg-white p-6 rounded-lg border border-gray-200 flex-1 info-card printable-card">
+                                <h3 class="text-xl font-semibold mb-4">🎒 활동</h3>
+                                <div class="space-y-4 text-lg">
+                                    <div>
+                                        <p class="font-bold text-gray-800">데이터 AI 개발자</p>
+                                        <p class="text-gray-500 ml-4">서울청년취업사관학교 (2025.05 ~ 진행중)</p>
+                                        <p class="text-gray-500 ml-4">Python, MySQL, Git</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-gray-800">세미콜론</p>
+                                        <p class="text-gray-500 ml-4">고등학교 교내 동아리</p>
+                                        <p class="text-gray-500 ml-4">Android, Java</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 자격증 -->
+                        <div class="bg-white p-6 rounded-lg border border-gray-200 h-full info-card printable-card">
+                            <h3 class="text-xl font-semibold mb-4">🧾 자격증</h3>
+                            <div class="space-y-5 text-lg">
+                                <div>
+                                    <p class="font-bold text-gray-800">Docs:</p>
+                                    <ul class="list-disc list-inside text-gray-500 mt-2 ml-4 space-y-1">
+                                        <li>Office Excel® 2010 (2018)</li>
+                                        <li>Office PowerPoint® 2010 (2018)</li>
+                                        <li>ITQ 아래한글 A등급 (2015)</li>
+                                        <li>ITQ 한글파워포인트 B등급 (2015)</li>
+                                        <li>IT PLUS LEVEL 4 (2017)</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-800">Develop:</p>
+                                    <ul class="list-disc list-inside text-gray-500 mt-2 ml-4 space-y-1">
+                                        <li>정보처리기사 (필기) (2025)</li>
+                                        <li>ADsP (2024)</li>
+                                        <li>정보처리기능사 (2017)</li>
+                                        <li>GTQ 2급 (2015)</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-800">etc:</p>
+                                    <ul class="list-disc list-inside text-gray-500 mt-2 ml-4 space-y-1">
+                                        <li>2종 보통 (2020)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>
